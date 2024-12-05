@@ -15,4 +15,10 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Maui.DataAccess\Maui.DataAccess.csproj" />
+    <ProjectReference Include="..\Maui.Models\Maui.Models.csproj" />
+    <ProjectReference Include="..\Maui.Utility\Maui.Utility.csproj" />
+  </ItemGroup>
+
 </Project>
