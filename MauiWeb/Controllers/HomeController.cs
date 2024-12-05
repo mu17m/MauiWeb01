@@ -1,8 +1,8 @@
-using Maui.Models;
+using MauiBook.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
-namespace MauiWeb.Controllers
+namespace MauiBookWeb.Controllers
 {
     public class HomeController : Controller
     {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Maui.Utility
+namespace MauiBook.Utility
 {
     public class SD
     {

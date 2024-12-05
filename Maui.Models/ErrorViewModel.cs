@@ -1,4 +1,4 @@
-namespace Maui.Models
+namespace MauiBook.Models
 {
     public class ErrorViewModel
     {

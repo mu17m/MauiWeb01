@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace Maui.Models
+namespace MauiBook.Models
 {
     public class Category
     {

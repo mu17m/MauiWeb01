@@ -1,9 +1,9 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
   <ItemGroup>
@@ -16,8 +16,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Maui.Models\Maui.Models.csproj" />
-    <ProjectReference Include="..\Maui.Utility\Maui.Utility.csproj" />
+    <ProjectReference Include="..\Maui.DataAccess\MauiBook.DataAccess.csproj" />
+    <ProjectReference Include="..\Maui.Models\MauiBook.Models.csproj" />
+    <ProjectReference Include="..\Maui.Utility\MauiBook.Utility.csproj" />
   </ItemGroup>
 
 </Project>

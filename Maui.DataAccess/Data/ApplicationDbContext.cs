@@ -1,6 +1,6 @@
-﻿using Maui.Models;
+﻿using MauiBook.Models;
 using Microsoft.EntityFrameworkCore;
-namespace Maui.DataAccess.Data
+namespace MauiBook.DataAccess.Data
 {
     public class ApplicationDbContext : DbContext
     {

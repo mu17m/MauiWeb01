@@ -1,5 +1,7 @@
-using Maui.DataAccess.Data;
+using MauiBook.DataAccess.Data;
+using MauiBook.DataAccess.Repositry.IRepositry;
 using Microsoft.EntityFrameworkCore;
+using MauiBook.DataAccess.Repositry;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,6 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ApplicationDbContext>(option=>
 option.UseSqlServer(builder.Configuration.GetConnectionString("ConnectToDB")));
+builder.Services.AddScoped<ICategoryRepositry, CategoryRepositry>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

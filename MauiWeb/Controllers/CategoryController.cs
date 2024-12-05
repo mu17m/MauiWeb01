@@ -1,19 +1,19 @@
-﻿using Maui.DataAccess.Data;
-using Maui.Models;
+﻿using MauiBook.DataAccess.Data;
+using MauiBook.Models;
 using Microsoft.AspNetCore.Mvc;
-
-namespace MauiWeb.Controllers
+using MauiBook.DataAccess.Repositry.IRepositry;
+namespace MauiBookWeb.Controllers
 {
     public class CategoryController : Controller
     {
-        private readonly ApplicationDbContext _Db;
-        public CategoryController(ApplicationDbContext Db)
+        private readonly ICategoryRepositry _CategoryRepo;
+        public CategoryController(ICategoryRepositry Db)
         {
-            _Db = Db;
+            _CategoryRepo = Db;
         }
         public IActionResult Index()
         {
-            List<Category> categories = _Db.categories.ToList();
+            List<Category> categories = _CategoryRepo.GetAll().ToList();
             return View(categories);
         }
         public IActionResult Create()
@@ -26,8 +26,8 @@ namespace MauiWeb.Controllers
           
            if(ModelState.IsValid)
             {
-                _Db.categories.Add(Model);
-                _Db.SaveChanges();
+                _CategoryRepo.Add(Model);
+                _CategoryRepo.Save();
                 TempData["Sucess"] = "Category Created Sucessfully";
                 return RedirectToAction("index");
             }
@@ -40,7 +40,7 @@ namespace MauiWeb.Controllers
             {
                 return NotFound();
             }
-            Category? category = _Db.categories.Find(id);
+            Category? category = _CategoryRepo.Get(C => C.Id == id);
             if(category == null)
             {
                 return NotFound();
@@ -53,8 +53,8 @@ namespace MauiWeb.Controllers
 
             if (ModelState.IsValid)
             {
-                _Db.categories.Update(Model);
-                _Db.SaveChanges();
+                _CategoryRepo.Update(Model);
+                _CategoryRepo.Save();
                 TempData["Sucess"] = "Category Edited Sucessfully";
                 return RedirectToAction("index");
             }
@@ -67,7 +67,7 @@ namespace MauiWeb.Controllers
             {
                 return NotFound();
             }
-            Category? category = _Db.categories.Find(id);
+            Category? category = _CategoryRepo.Get(C => C.Id == id);
             if (category == null)
             {
                 return NotFound();
@@ -77,13 +77,13 @@ namespace MauiWeb.Controllers
         [HttpPost, ActionName("Delete")]
         public IActionResult DeletePOST(int? id)
         {
-            Category? Model = _Db.categories.Find(id);
+            Category? Model = _CategoryRepo.Get(C => C.Id == id);
             if(Model == null)
             {
                 return NotFound();
             }
-           _Db.categories.Remove(Model);
-            _Db.SaveChanges();
+           _CategoryRepo.Remove(Model);
+            _CategoryRepo.Save();
             TempData["Sucess"] = "Category Deleted Sucessfully";
             return RedirectToAction("index");
         }

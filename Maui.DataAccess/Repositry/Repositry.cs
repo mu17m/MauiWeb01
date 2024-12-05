@@ -1,13 +1,13 @@
-﻿using Maui.DataAccess.Repositry.IRepositry;
+﻿using MauiBook.DataAccess.Repositry.IRepositry;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Maui.DataAccess.Repositry.IRepositry;
-using Maui.DataAccess.Data;
+using MauiBook.DataAccess.Repositry.IRepositry;
+using MauiBook.DataAccess.Data;
 using Microsoft.EntityFrameworkCore;
-namespace Maui.DataAccess.Repositry
+namespace MauiBook.DataAccess.Repositry
 {
     public class Repositry<T> : IRepositry<T> where T : class
     {

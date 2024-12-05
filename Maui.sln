@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MauiWeb", "MauiWeb\MauiWeb.csproj", "{75B23FFA-B593-4173-81E3-FE9BE21E6AFD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MauiBookWeb", "MauiWeb\MauiBookWeb.csproj", "{75B23FFA-B593-4173-81E3-FE9BE21E6AFD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Maui.DataAccess", "Maui.DataAccess\Maui.DataAccess.csproj", "{1A3891D9-183B-4D94-9DB4-0E054A846D58}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MauiBook.DataAccess", "Maui.DataAccess\MauiBook.DataAccess.csproj", "{1A3891D9-183B-4D94-9DB4-0E054A846D58}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Maui.Models", "Maui.Models\Maui.Models.csproj", "{6C2520A0-6992-4EA8-99FA-0788168ACCC5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MauiBook.Models", "Maui.Models\MauiBook.Models.csproj", "{6C2520A0-6992-4EA8-99FA-0788168ACCC5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Maui.Utility", "Maui.Utility\Maui.Utility.csproj", "{4A3E41B3-9742-4B16-8A4F-FD3A90519A7D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MauiBook.Utility", "Maui.Utility\MauiBook.Utility.csproj", "{4A3E41B3-9742-4B16-8A4F-FD3A90519A7D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

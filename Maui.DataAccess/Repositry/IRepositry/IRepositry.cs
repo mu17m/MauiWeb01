@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Maui.DataAccess.Repositry.IRepositry
+namespace MauiBook.DataAccess.Repositry.IRepositry
 {
     public interface IRepositry<T> where T : class
     {
