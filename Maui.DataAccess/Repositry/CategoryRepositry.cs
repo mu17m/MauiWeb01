@@ -15,12 +15,6 @@ namespace MauiBook.DataAccess.Repositry
         {
             _Db = Db;
         }
-
-        public void Save()
-        {
-            _Db.SaveChanges();
-        }
-
         public void Update(Category entity)
         {
             _Db.categories.Update(entity);

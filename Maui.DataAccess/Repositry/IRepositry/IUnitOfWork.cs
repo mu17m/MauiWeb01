@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MauiBook.DataAccess.Repositry.IRepositry;
-using MauiBook.Models;
+
 namespace MauiBook.DataAccess.Repositry.IRepositry
 {
-    public interface ICategoryRepositry : IRepositry<Category>
+    public interface IUnitOfWork
     {
-        public void Update(Category entity);
+        ICategoryRepositry category { get; }
+        public void Save();
     }
 }
