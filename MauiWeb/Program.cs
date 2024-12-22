@@ -2,14 +2,18 @@ using MauiBook.DataAccess.Data;
 using MauiBook.DataAccess.Repositry.IRepositry;
 using Microsoft.EntityFrameworkCore;
 using MauiBook.DataAccess.Repositry;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddRazorPages();
 builder.Services.AddDbContext<ApplicationDbContext>(option=>
 option.UseSqlServer(builder.Configuration.GetConnectionString("ConnectToDB")));
-builder.Services.AddScoped<ICategoryRepositry, CategoryRepositry>();
+
+builder.Services.AddDefaultIdentity<IdentityUser>().AddEntityFrameworkStores<ApplicationDbContext>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -25,10 +29,11 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
-
+app.MapRazorPages();
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{area=Customer}/{controller=Home}/{action=Index}/{id?}");
 
 app.Run();

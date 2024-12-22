@@ -9,6 +9,7 @@ namespace MauiBook.DataAccess.Repositry.IRepositry
     public interface IUnitOfWork
     {
         ICategoryRepositry categoryRepositry { get; }
+        IProductRepositry productRepositry { get; }
         void Save();
     }
 }
