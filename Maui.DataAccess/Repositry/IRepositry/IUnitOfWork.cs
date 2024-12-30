@@ -10,6 +10,7 @@ namespace MauiBook.DataAccess.Repositry.IRepositry
     {
         ICategoryRepositry categoryRepositry { get; }
         IProductRepositry productRepositry { get; }
+        ICompanayRepositry companayRepositry { get; }
         void Save();
     }
 }

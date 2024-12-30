@@ -10,8 +10,11 @@ namespace MauiBook.DataAccess.Data
         {
             
         }
+
         public DbSet<Category> categories {  get; set; }
         public DbSet<Product> products { get; set; }
+        public DbSet<ApplicationUser> ApplicationUsers {  get; set; }
+        public DbSet<Company> companies { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -21,6 +24,12 @@ namespace MauiBook.DataAccess.Data
                 new Category { Id = 1, Name = "Action", DisplayOrder = 1},
                 new Category { Id = 2, Name = "SciFi", DisplayOrder = 2 },
                 new Category { Id = 3, Name = "History", DisplayOrder = 3 }
+                );
+
+            modelBuilder.Entity<Company>().HasData(
+                new Company { Id = 1, Name = "BabylonTech", StreetAddress="0119", City= "Al-Hillah", State="Babil", PhoneNumber="07811", PostalCode="1011"},
+                new Company { Id = 2, Name = "IraqTech", StreetAddress="0119", City= "Al-Hillah", State="Babil", PhoneNumber="07811", PostalCode="1011"},
+                new Company { Id = 3, Name = "ArabTech", StreetAddress="0119", City= "Al-Hillah", State="Babil", PhoneNumber="07811", PostalCode="1011"}
                 );
 
             modelBuilder.Entity<Product>().HasData(
@@ -110,5 +119,6 @@ namespace MauiBook.DataAccess.Data
                 }
             );
         }
+
     }
 }

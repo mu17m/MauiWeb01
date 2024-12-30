@@ -13,12 +13,14 @@ namespace MauiBook.DataAccess.Repositry
         private readonly ApplicationDbContext _Db;
         public ICategoryRepositry categoryRepositry {  get; private set; }
         public IProductRepositry productRepositry { get; private set; }
+        public ICompanayRepositry companayRepositry { get; private set; }
 
         public UnitOfWork(ApplicationDbContext Db) 
         {
             _Db = Db;
             categoryRepositry = new CategoryRepositry(Db);
             productRepositry = new ProductRepositry(Db);
+            companayRepositry = new CompanayRepositry(Db);
         }
 
         public void Save()

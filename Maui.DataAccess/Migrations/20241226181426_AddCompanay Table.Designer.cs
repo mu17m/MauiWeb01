@@ -4,6 +4,7 @@ using MauiBook.DataAccess.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MauiBook.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241226181426_AddCompanay Table")]
+    partial class AddCompanayTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -72,6 +75,7 @@ namespace MauiBook.DataAccess.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("City")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
@@ -79,52 +83,24 @@ namespace MauiBook.DataAccess.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PostalCode")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("State")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("StreetAddress")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.ToTable("companies");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            City = "Al-Hillah",
-                            Name = "BabylonTech",
-                            PhoneNumber = "07811",
-                            PostalCode = "1011",
-                            State = "Babil",
-                            StreetAddress = "0119"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            City = "Al-Hillah",
-                            Name = "IraqTech",
-                            PhoneNumber = "07811",
-                            PostalCode = "1011",
-                            State = "Babil",
-                            StreetAddress = "0119"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            City = "Al-Hillah",
-                            Name = "ArabTech",
-                            PhoneNumber = "07811",
-                            PostalCode = "1011",
-                            State = "Babil",
-                            StreetAddress = "0119"
-                        });
                 });
 
             modelBuilder.Entity("MauiBook.Models.Product", b =>
@@ -477,9 +453,6 @@ namespace MauiBook.DataAccess.Migrations
                     b.Property<string>("City")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("CompanyId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -492,8 +465,6 @@ namespace MauiBook.DataAccess.Migrations
 
                     b.Property<string>("StreetAddress")
                         .HasColumnType("nvarchar(max)");
-
-                    b.HasIndex("CompanyId");
 
                     b.HasDiscriminator().HasValue("ApplicationUser");
                 });
@@ -558,15 +529,6 @@ namespace MauiBook.DataAccess.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("MauiBook.Models.ApplicationUser", b =>
-                {
-                    b.HasOne("MauiBook.Models.Company", "company")
-                        .WithMany()
-                        .HasForeignKey("CompanyId");
-
-                    b.Navigation("company");
                 });
 #pragma warning restore 612, 618
         }

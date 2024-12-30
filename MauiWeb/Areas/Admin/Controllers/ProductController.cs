@@ -2,6 +2,8 @@
 using MauiBook.DataAccess.Repositry.IRepositry;
 using MauiBook.Models;
 using MauiBook.Models.ViewModels;
+using MauiBook.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Security.Cryptography.X509Certificates;
@@ -9,6 +11,7 @@ using System.Security.Cryptography.X509Certificates;
 namespace MauiBookWeb.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    //[Authorize(Roles = SD.Role_Admin)]
     public class ProductController : Controller
     {
         private readonly IUnitOfWork _UnitOfWork;

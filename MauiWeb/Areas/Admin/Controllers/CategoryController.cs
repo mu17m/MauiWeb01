@@ -2,9 +2,12 @@
 using MauiBook.Models;
 using Microsoft.AspNetCore.Mvc;
 using MauiBook.DataAccess.Repositry.IRepositry;
+using MauiBook.Utility;
+using Microsoft.AspNetCore.Authorization;
 namespace MauiBookWeb.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    //[Authorize(Roles = SD.Role_Admin)]
     public class CategoryController : Controller
     {
         private readonly IUnitOfWork _unitofwork;
