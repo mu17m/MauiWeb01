@@ -5,12 +5,14 @@ using MauiBook.DataAccess.Repositry;
 using Microsoft.AspNetCore.Identity;
 using MauiBook.Utility;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using Stripe;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
+builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("Stripe"));
 builder.Services.AddDbContext<ApplicationDbContext>(option=>
 option.UseSqlServer(builder.Configuration.GetConnectionString("ConnectToDB")));
 
@@ -35,7 +37,7 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
+StripeConfiguration.ApiKey = builder.Configuration.GetSection("Stripe:SecretKey").Get<string>();
 app.UseRouting();
 
 app.UseAuthentication();

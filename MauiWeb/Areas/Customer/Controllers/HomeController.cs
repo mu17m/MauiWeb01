@@ -4,6 +4,7 @@ using MauiBook.Utility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Security.Claims;
 
 namespace MauiBookWeb.Controllers
 {
@@ -24,10 +25,41 @@ namespace MauiBookWeb.Controllers
             IEnumerable<Product> products = _unitOfWork.productRepositry.GetAll(includeProperity: "category");
             return View(products);
         }
+
         public IActionResult Details(int id)
         {
-            Product product = _unitOfWork.productRepositry.Get(p=> p.Id == id, includeProperity: "category");
-            return View(product);
+            ShoppingCart Cart = new()
+            {
+                Product = _unitOfWork.productRepositry.Get(p => p.Id == id, includeProperity: "category"),
+                Count = 1,
+                ProductId = id
+            }; 
+            return View(Cart);
+        }
+        [HttpPost]
+        [Authorize]
+        public IActionResult Details(ShoppingCart shoppingCart)
+        {
+            var ClaimId = (ClaimsIdentity)User.Identity;
+            var UserId = ClaimId.FindFirst(ClaimTypes.NameIdentifier).Value;
+            shoppingCart.ApplicationUserId = UserId;
+            shoppingCart.Id = 0;
+
+            ShoppingCart cartFromDb = _unitOfWork.ShoppingCartRepositry.Get(c => c.ApplicationUserId == UserId && c.ProductId == shoppingCart.ProductId);
+            if(cartFromDb != null)
+            {
+                //Update Exist Cart
+                cartFromDb.Count += shoppingCart.Count;
+                _unitOfWork.ShoppingCartRepositry.Update(cartFromDb);
+            }
+            else
+            {
+                //Add New Cart
+                _unitOfWork.ShoppingCartRepositry.Add(shoppingCart);
+            }
+            _unitOfWork.Save();
+            TempData["Sucess"] = "Cart Updated Successfully";
+            return RedirectToAction(nameof(Index));
         }
 
         public IActionResult Privacy()

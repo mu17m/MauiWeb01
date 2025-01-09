@@ -6,12 +6,13 @@ using System.Text;
 using System.Threading.Tasks;
 using MauiBook.DataAccess.Data;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 namespace MauiBook.DataAccess.Repositry
 {
     public class Repositry<T> : IRepositry<T> where T : class
     {
         private readonly ApplicationDbContext _Db;
-        internal DbSet<T> dbset;
+        private DbSet<T> dbset;
 
         public Repositry(ApplicationDbContext Db)
         {
@@ -24,9 +25,18 @@ namespace MauiBook.DataAccess.Repositry
         {
             dbset.Add(entity);
         }
-        public T Get(System.Linq.Expressions.Expression<Func<T, bool>> filter, string? includeProperity = null)
+        public T Get(System.Linq.Expressions.Expression<Func<T, bool>> filter, string? includeProperity = null, bool tracked = false)
         {
-            IQueryable<T> query = dbset;
+            IQueryable<T> query;
+            if(tracked)
+            {
+                query = dbset;
+            }   
+            else
+            {
+                query = dbset.AsNoTracking();
+            }
+            query = query.Where(filter);
             if(!string.IsNullOrEmpty(includeProperity))
             {
                 foreach(var prop in includeProperity.Split(',', StringSplitOptions.RemoveEmptyEntries))
@@ -34,12 +44,15 @@ namespace MauiBook.DataAccess.Repositry
                     query = query.Include(prop);
                 }
             }
-            query = query.Where(filter);
             return query.FirstOrDefault();
         }
-        public IEnumerable<T> GetAll(string? includeProperities = null)
+        public IEnumerable<T> GetAll(Expression<Func<T, bool>>? filter=null,string? includeProperities = null)
         {
             IQueryable<T> query = dbset;
+            if(filter != null)
+            {
+                query = query.Where(filter);
+            }
             if(!string.IsNullOrEmpty(includeProperities))
             {
                 foreach(var properity in includeProperities.Split(',', StringSplitOptions.RemoveEmptyEntries))
@@ -53,7 +66,7 @@ namespace MauiBook.DataAccess.Repositry
         {
             dbset.Remove(entity);
         }
-        public void RemoveRange(T entity)
+        public void RemoveRange(List<T> entity)
         {
             dbset.RemoveRange(entity);
         }
