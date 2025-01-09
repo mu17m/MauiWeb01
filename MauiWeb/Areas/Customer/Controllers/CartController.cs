@@ -161,6 +161,8 @@ namespace MauiBookWeb.Areas.Customer.Controllers
                     _UnitOfWork.orderHeaderRepositry.UpdateStripePaymentId(id, orderHeader.SessionId, session.PaymentIntentId);
                     _UnitOfWork.Save();
                 }
+                HttpContext.Session.Clear();
+
                 List<ShoppingCart> shoppingCarts = _UnitOfWork.ShoppingCartRepositry.GetAll(u => u.ApplicationUserId == orderHeader.ApplicationUserId).ToList();
                 _UnitOfWork.ShoppingCartRepositry.RemoveRange(shoppingCarts);
                 _UnitOfWork.Save();
@@ -177,9 +179,10 @@ namespace MauiBookWeb.Areas.Customer.Controllers
         }
         public IActionResult Minus(int cartId)
         {
-            ShoppingCart CartFromDb = _UnitOfWork.ShoppingCartRepositry.Get(u => u.Id == cartId);
+            ShoppingCart CartFromDb = _UnitOfWork.ShoppingCartRepositry.Get(u => u.Id == cartId, tracked:true);
             if (CartFromDb.Count <= 1)
             {
+                HttpContext.Session.SetInt32(SD.SessionCart, _UnitOfWork.ShoppingCartRepositry.GetAll(u => u.ApplicationUserId == CartFromDb.ApplicationUserId).Count() - 1);
                 _UnitOfWork.ShoppingCartRepositry.Remove(CartFromDb);
                 _UnitOfWork.Save();
             }
@@ -193,7 +196,9 @@ namespace MauiBookWeb.Areas.Customer.Controllers
         }
         public IActionResult remove(int cartId)
         {
-            ShoppingCart CartFromDb = _UnitOfWork.ShoppingCartRepositry.Get(u => u.Id == cartId);
+            ShoppingCart CartFromDb = _UnitOfWork.ShoppingCartRepositry.Get(u => u.Id == cartId, tracked:true);
+            HttpContext.Session.SetInt32(SD.SessionCart, _UnitOfWork.ShoppingCartRepositry.GetAll(u => u.ApplicationUserId == CartFromDb.ApplicationUserId).Count() - 1);
+
             _UnitOfWork.ShoppingCartRepositry.Remove(CartFromDb);
             _UnitOfWork.Save();
             return RedirectToAction(nameof(Index));

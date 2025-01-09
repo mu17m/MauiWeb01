@@ -22,6 +22,12 @@ namespace MauiBookWeb.Controllers
 
         public IActionResult Index()
         {
+            var ClaimIdentity = (ClaimsIdentity)User.Identity;
+            var ClaimedUser = ClaimIdentity.FindFirst(ClaimTypes.NameIdentifier);
+            if(ClaimedUser != null)
+            {
+                HttpContext.Session.SetInt32(SD.SessionCart, _unitOfWork.ShoppingCartRepositry.GetAll(c => c.ApplicationUserId == ClaimedUser.Value).Count());
+            }
             IEnumerable<Product> products = _unitOfWork.productRepositry.GetAll(includeProperity: "category");
             return View(products);
         }
@@ -51,13 +57,17 @@ namespace MauiBookWeb.Controllers
                 //Update Exist Cart
                 cartFromDb.Count += shoppingCart.Count;
                 _unitOfWork.ShoppingCartRepositry.Update(cartFromDb);
+                _unitOfWork.Save();
             }
             else
             {
                 //Add New Cart
                 _unitOfWork.ShoppingCartRepositry.Add(shoppingCart);
+                HttpContext.Session.SetInt32(SD.SessionCart, 
+                _unitOfWork.ShoppingCartRepositry.GetAll(c => c.ApplicationUserId == UserId).Count());
+                _unitOfWork.Save();
             }
-            _unitOfWork.Save();
+            
             TempData["Sucess"] = "Cart Updated Successfully";
             return RedirectToAction(nameof(Index));
         }
