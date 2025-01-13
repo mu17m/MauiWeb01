@@ -10,6 +10,5 @@ namespace MauiBook.DataAccess.Repositry.IRepositry
     public interface ICategoryRepositry : IRepositry<Category>
     {
         public void Update(Category entity);
-        public void Save();
     }
 }

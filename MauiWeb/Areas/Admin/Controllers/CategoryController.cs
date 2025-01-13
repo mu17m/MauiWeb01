@@ -2,18 +2,19 @@
 using MauiBook.Models;
 using Microsoft.AspNetCore.Mvc;
 using MauiBook.DataAccess.Repositry.IRepositry;
-namespace MauiBookWeb.Controllers
+namespace MauiBookWeb.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class CategoryController : Controller
     {
-        private readonly ICategoryRepositry _CategoryRepo;
-        public CategoryController(ICategoryRepositry Db)
+        private readonly IUnitOfWork _unitofwork;
+        public CategoryController(IUnitOfWork Db)
         {
-            _CategoryRepo = Db;
+            _unitofwork = Db;
         }
         public IActionResult Index()
         {
-            List<Category> categories = _CategoryRepo.GetAll().ToList();
+            List<Category> categories = _unitofwork.category.GetAll().ToList();
             return View(categories);
         }
         public IActionResult Create()
@@ -23,25 +24,25 @@ namespace MauiBookWeb.Controllers
         [HttpPost]
         public IActionResult Create(Category Model)
         {
-          
-           if(ModelState.IsValid)
+
+            if (ModelState.IsValid)
             {
-                _CategoryRepo.Add(Model);
-                _CategoryRepo.Save();
+                _unitofwork.category.Add(Model);
+                _unitofwork.Save();
                 TempData["Sucess"] = "Category Created Sucessfully";
                 return RedirectToAction("index");
             }
-           return View(Model);
+            return View(Model);
         }
 
         public IActionResult Edit(int? id)
         {
-            if(id == null || id == 0 )
+            if (id == null || id == 0)
             {
                 return NotFound();
             }
-            Category? category = _CategoryRepo.Get(C => C.Id == id);
-            if(category == null)
+            Category? category = _unitofwork.category.Get(C => C.Id == id);
+            if (category == null)
             {
                 return NotFound();
             }
@@ -53,8 +54,8 @@ namespace MauiBookWeb.Controllers
 
             if (ModelState.IsValid)
             {
-                _CategoryRepo.Update(Model);
-                _CategoryRepo.Save();
+                _unitofwork.category.Update(Model);
+                _unitofwork.Save();
                 TempData["Sucess"] = "Category Edited Sucessfully";
                 return RedirectToAction("index");
             }
@@ -67,7 +68,7 @@ namespace MauiBookWeb.Controllers
             {
                 return NotFound();
             }
-            Category? category = _CategoryRepo.Get(C => C.Id == id);
+            Category? category = _unitofwork.category.Get(C => C.Id == id);
             if (category == null)
             {
                 return NotFound();
@@ -77,13 +78,13 @@ namespace MauiBookWeb.Controllers
         [HttpPost, ActionName("Delete")]
         public IActionResult DeletePOST(int? id)
         {
-            Category? Model = _CategoryRepo.Get(C => C.Id == id);
-            if(Model == null)
+            Category? Model = _unitofwork.category.Get(C => C.Id == id);
+            if (Model == null)
             {
                 return NotFound();
             }
-           _CategoryRepo.Remove(Model);
-            _CategoryRepo.Save();
+            _unitofwork.category.Remove(Model);
+            _unitofwork.Save();
             TempData["Sucess"] = "Category Deleted Sucessfully";
             return RedirectToAction("index");
         }
