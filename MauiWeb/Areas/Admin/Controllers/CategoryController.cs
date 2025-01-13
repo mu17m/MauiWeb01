@@ -2,21 +2,25 @@
 using MauiBook.Models;
 using Microsoft.AspNetCore.Mvc;
 using MauiBook.DataAccess.Repositry.IRepositry;
+using MauiBook.Utility;
+using Microsoft.AspNetCore.Authorization;
 namespace MauiBookWeb.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = SD.Role_Admin)]
     public class CategoryController : Controller
     {
         private readonly IUnitOfWork _unitofwork;
-        public CategoryController(IUnitOfWork Db)
+        public CategoryController(IUnitOfWork unitofwork)
         {
-            _unitofwork = Db;
+            _unitofwork = unitofwork;
         }
         public IActionResult Index()
         {
-            List<Category> categories = _unitofwork.category.GetAll().ToList();
+            List<Category> categories = _unitofwork.categoryRepositry.GetAll().ToList();
             return View(categories);
         }
+
         public IActionResult Create()
         {
             return View();
@@ -27,7 +31,7 @@ namespace MauiBookWeb.Areas.Admin.Controllers
 
             if (ModelState.IsValid)
             {
-                _unitofwork.category.Add(Model);
+                _unitofwork.categoryRepositry.Add(Model);
                 _unitofwork.Save();
                 TempData["Sucess"] = "Category Created Sucessfully";
                 return RedirectToAction("index");
@@ -41,7 +45,7 @@ namespace MauiBookWeb.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            Category? category = _unitofwork.category.Get(C => C.Id == id);
+            Category? category = _unitofwork.categoryRepositry.Get(C => C.Id == id);
             if (category == null)
             {
                 return NotFound();
@@ -54,7 +58,7 @@ namespace MauiBookWeb.Areas.Admin.Controllers
 
             if (ModelState.IsValid)
             {
-                _unitofwork.category.Update(Model);
+                _unitofwork.categoryRepositry.Update(Model);
                 _unitofwork.Save();
                 TempData["Sucess"] = "Category Edited Sucessfully";
                 return RedirectToAction("index");
@@ -68,22 +72,23 @@ namespace MauiBookWeb.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            Category? category = _unitofwork.category.Get(C => C.Id == id);
+            Category? category = _unitofwork.categoryRepositry.Get(C => C.Id == id);
             if (category == null)
             {
                 return NotFound();
             }
             return View(category);
         }
+
         [HttpPost, ActionName("Delete")]
         public IActionResult DeletePOST(int? id)
         {
-            Category? Model = _unitofwork.category.Get(C => C.Id == id);
+            Category? Model = _unitofwork.categoryRepositry.Get(C => C.Id == id);
             if (Model == null)
             {
                 return NotFound();
             }
-            _unitofwork.category.Remove(Model);
+            _unitofwork.categoryRepositry.Remove(Model);
             _unitofwork.Save();
             TempData["Sucess"] = "Category Deleted Sucessfully";
             return RedirectToAction("index");

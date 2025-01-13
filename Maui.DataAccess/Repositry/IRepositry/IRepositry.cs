@@ -10,10 +10,10 @@ namespace MauiBook.DataAccess.Repositry.IRepositry
 {
     public interface IRepositry<T> where T : class
     {
-        IEnumerable<T> GetAll();
-        T Get(Expression<Func<T, bool>> filter);
+        IEnumerable<T> GetAll(Expression<Func<T, bool>>? filter=null,string? includeProperity = null);
+        T Get(Expression<Func<T, bool>> filter, string? includeProperity = null, bool tracked = false);
         void Add(T entity);
         void Remove(T entity);
-        void RemoveRange(T entity);
+        void RemoveRange(List<T> entity);
     }
 }
