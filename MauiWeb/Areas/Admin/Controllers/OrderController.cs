@@ -119,7 +119,7 @@ namespace MauiBookWeb.Areas.Admin.Controllers
             orderVM.OrderDetails = _unitOfWork.orderDetailRepositry.GetAll(u => u.OrderHeaderId == orderVM.Order.Id, includeProperity:"Product");
 
             // Stripe logic
-            var domin = "https://localhost:7200/";
+            var domin = Request.Scheme + "://" + Request.Host.Value + "/";
             var options = new SessionCreateOptions
             {
                 SuccessUrl = domin + $"Admin/Order/PaymentConfirmation?OrderHeaderid={orderVM.Order.Id}",

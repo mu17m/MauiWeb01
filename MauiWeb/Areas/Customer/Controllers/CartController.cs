@@ -111,7 +111,7 @@ namespace MauiBookWeb.Areas.Customer.Controllers
             {
                 // this is Customer & we need to get payment
                 // Stripe logic
-                var domin = "https://localhost:7200/";
+                var domin = Request.Scheme + "://" + Request.Host.Value + "/";
                 var options = new Stripe.Checkout.SessionCreateOptions
                 {
                     SuccessUrl = domin + $"Customer/Cart/OrderConfirmation?id={ShoppingCartVM.OrderHeader.Id}",

@@ -49,7 +49,7 @@ namespace MauiBookWeb.Controllers
             var ClaimId = (ClaimsIdentity)User.Identity;
             var UserId = ClaimId.FindFirst(ClaimTypes.NameIdentifier).Value;
             shoppingCart.ApplicationUserId = UserId;
-            shoppingCart.Id = 0;
+            //shoppingCart.Id = 0;
 
             ShoppingCart cartFromDb = _unitOfWork.ShoppingCartRepositry.Get(c => c.ApplicationUserId == UserId && c.ProductId == shoppingCart.ProductId);
             if(cartFromDb != null)

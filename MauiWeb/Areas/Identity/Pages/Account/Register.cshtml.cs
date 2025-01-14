@@ -173,6 +173,7 @@ namespace MauiBookWeb.Areas.Identity.Pages.Account
                 user.City = Input.City;
                 user.State = Input.State;
                 user.PhoneNumber = Input.PhoneNumber;
+                user.PostalCode = Input.PostalCode;
                 if(Input.Role == SD.Role_Company)
                 {
                     user.CompanyId = Input.CompanyId;
