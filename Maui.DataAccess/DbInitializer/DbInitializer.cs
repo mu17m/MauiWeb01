@@ -48,15 +48,15 @@ namespace MauiBook.DataAccess.DbInitializer
                 _userManager.CreateAsync(new ApplicationUser
                 {
                     UserName = "admin@gmail.com",
-                    Email = "admin.gmail.com",
+                    Email = "admin@gmail.com",
                     Name = "Admin",
                     PhoneNumber = "1234567890",
-                    StreetAddress = "Al-Hillah babil",
-                    State = "babil",
+                    StreetAddress = "Hayy Al Bakarly",
+                    State = "Babil",
                     PostalCode = "5101",
-                    City = "Al-Hillah",
+                    City = "Al Hillah",
                 }, "Admin123*").GetAwaiter().GetResult();
-                ApplicationUser user = _Db.ApplicationUsers.FirstOrDefault(u => u.Email == "admin.gmail.com");
+                ApplicationUser user = _Db.ApplicationUsers.FirstOrDefault(u => u.Email == "admin@gmail.com");
                 _userManager.AddToRoleAsync(user, SD.Role_Admin).GetAwaiter().GetResult();
 
             }
